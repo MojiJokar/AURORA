@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build files
+build/
+dist/
+
+# Logs and raw simulation data
+/logs/*
+/sensor_data/*
+/backups/*
+*.log
+*.tlog
+*.bin
+*.ulg
+*.bag
+*.db3
+
+# Operating system
+.DS_Store
+Thumbs.db
