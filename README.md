@@ -323,3 +323,19 @@ Suggested locations:
 **Documentation rule:** Update this README whenever a command, path,
 parameter, software version or verified capability changes. Clearly
 distinguish *planned*, *implemented* and *tested* features.
+
+
+
+Practise:
+
+In Nano, save with **Ctrl+O**, press **Enter**, then exit with **Ctrl+X**.
+
+### 3. Add a reference in the main README
+
+In `/data/AURORA/README.md`, add this under the documentation section:
+
+```markdown
+## Simulation startup commands
+
+See [Simulation Startup Guide](documentation/runbooks/SIMULATION_STARTUP.md)
+for the commands to launch Gazebo, ArduPilot SITL and Mission Planner.
