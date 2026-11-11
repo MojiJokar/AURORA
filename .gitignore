@@ -8,6 +8,12 @@ venv/
 build/
 dist/
 
+# Downloaded AI model weights
+*.pt
+
+# Generated inference outputs
+/runs/
+
 # Logs and raw simulation data
 /logs/*
 /sensor_data/*

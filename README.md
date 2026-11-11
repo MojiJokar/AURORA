@@ -1,341 +1,206 @@
-# AURORA --- Autonomous UAV Operations, Recovery and Navigation Architecture
+# AURORA
 
-> **Project status:** Development / simulation baseline\
-> **Platform:** Ubuntu 22.04.5 LTS\
-> **Purpose:** A single integrated UAV project for autonomous
-> navigation, perception, obstacle avoidance, precision landing and
-> intelligent recovery.
+## AI-Powered Autonomous UAV for Search, Inspection & Intelligent Mission Replanning
 
-AURORA is the working project name for this development effort. The
-capabilities described in the roadmap are targets; they are not all
-implemented yet.
+AURORA is a simulation-first autonomous UAV project exploring the integration of artificial intelligence, computer vision, autonomous flight control, geospatial safety, and intelligent mission planning.
 
-------------------------------------------------------------------------
+The project focuses on two primary application areas:
 
-## 1. Project goals
+- **Search & Rescue** — aerial observation, object detection research, and mission support.
+- **Infrastructure Inspection** — aerial imagery, visual analysis, and repeatable inspection missions.
 
-Build and demonstrate one integrated UAV system that can:
+AURORA is being developed and evaluated in simulation before any consideration of physical deployment.
 
-1.  Execute autonomous missions using ArduPilot.
-2.  Simulate the aircraft and environment in Gazebo Harmonic.
-3.  Integrate perception sensors (camera and LiDAR/rangefinder).
-4.  Detect obstacles and support navigation decisions.
-5.  Identify a landing target and perform precision landing.
-6.  Monitor mission/vehicle state and record useful logs.
+---
 
-## 2. Current development status
+## 1. Project Vision
 
-  -----------------------------------------------------------------------
-  Component                           Current status
-  ----------------------------------- -----------------------------------
-  Ubuntu 22.04.5                      Installed and working
+The goal of AURORA is to develop an intelligent UAV system that can:
 
-  Gazebo Harmonic 8.15.0              Launches; Iris model visible in
-                                      runway world
+- Observe and interpret its surroundings using camera imagery.
+- Identify objects and potential areas of interest.
+- Monitor mission routes and restricted geographical areas.
+- Detect potential route conflicts.
+- Alert the ground station when a safety concern is identified.
+- Plan and evaluate safer alternative routes.
+- Support mission monitoring and reporting.
 
-  ArduPilot SITL                      Starts with the Gazebo Iris JSON
-                                      model
+The long-term objective is to connect aerial perception with safe, intelligent mission decisions.
 
-  MAVProxy                            Starts and forwards MAVLink to UDP
-                                      `14550`
+## 2. Main Applications
 
-  Mission Planner 1.3.82              Launches under Mono and has
-                                      connected to SITL over UDP
+### Search & Rescue
 
-  ROS 2                               Not yet installed/integrated
+- Observe simulated search areas using an onboard camera.
+- Explore AI-assisted object detection.
+- Support identification of possible search targets.
+- Monitor mission routes and restricted geographical areas.
+- Report mission events to the ground station.
 
-  Camera/LiDAR data integration       Not yet verified
+### Infrastructure Inspection
 
-  Autonomous takeoff/mission/landing  Not yet demonstrated
+- Capture and analyse infrastructure imagery.
+- Identify visible objects and potential anomalies.
+- Support repeatable inspection routes.
+- Record observations for later evaluation.
 
-  Precision landing / obstacle        Planned
-  avoidance                           
-  -----------------------------------------------------------------------
+## 3. Core System Capabilities
 
-**Safety/status note:** The setup has been connected for telemetry, but
-a successful simulated takeoff and landing have not yet been verified. A
-previous ArduCopter startup showed a frame/pre-arm warning. Check the
-current pre-arm status and simulator behavior before attempting to arm.
-Do not treat a connected HUD or GPS display as proof that flight
-controls and simulated motors are working.
+| Capability | Current Status |
+|---|---|
+| Gazebo UAV simulation | Tested |
+| ArduPilot SITL integration | Tested |
+| Mission Planner connection | Tested |
+| Live Gazebo camera stream | Tested |
+| Initial YOLO model evaluation | Initial testing |
+| Reliable target detection | Under development |
+| Object tracking | Planned |
+| Geofence monitoring | Planned |
+| Proximity and route-conflict monitoring | Planned |
+| Mission Planner safety alerts | Planned |
+| Intelligent route replanning | Planned |
+| Autonomous mission execution | Planned |
+| Mission monitoring and reporting | Planned |
 
-## 3. Storage and project directories
+Statuses describe the current development stage, not guaranteed operational performance.
 
-The dedicated AURORA data partition is mounted at `/data`:
+## 4. System Architecture
 
-``` text
-/data/AURORA/
-├── simulation/       # Gazebo worlds and simulation results
-├── sensor_data/      # Camera, LiDAR and GPS recordings
-├── logs/             # Flight and telemetry logs
-├── models/            # UAV and landing-pad models
-├── documentation/    # Project documents
-└── backups/           # Project backups
+AURORA is organised into modular components:
+
+| Module | Responsibility |
+|---|---|
+| AURORA-SIM | Gazebo and ArduPilot simulation |
+| AURORA-VISION | Camera processing and AI-based object detection |
+| AURORA-TRACK | Object tracking and observation continuity |
+| AURORA-BRAIN | Decision-making and mission intelligence |
+| AURORA-GEOFENCE | Restricted-zone and geospatial safety monitoring |
+| AURORA-PLANNER | Route planning and mission replanning |
+| AURORA-AUTONOMY | Mission planning and execution |
+| AURORA-MONITOR | Mission status, alerts, and reporting |
+
+These modules represent the intended system architecture. Not all modules are implemented yet.
+
+## 5. Geofencing & Intelligent Mission Replanning
+
+An important planned capability is to make AURORA aware of restricted geographical areas and route conflicts.
+
+The intended workflow is:
+
+1. Monitor the planned UAV route.
+2. Check the route against configured restricted areas.
+3. Identify potential conflicts before entering restricted areas.
+4. Notify the ground station and Mission Planner.
+5. Calculate and evaluate a safe alternative route.
+6. Validate the alternative route against mission constraints.
+7. Execute only an approved route.
+8. Rejoin the original mission when it is safe to do so.
+
+ArduPilot's native geofence functionality is intended to remain an independent safety backstop. AURORA is not intended to bypass or disable flight-controller safety protections.
+
+This capability is part of the development roadmap and is not yet implemented.
+
+## 6. Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Application development |
+| OpenCV | Image processing |
+| YOLO | Object detection experiments |
+| NumPy | Image and numerical processing |
+| Gazebo Harmonic | UAV simulation |
+| ArduPilot SITL | Simulated flight control |
+| MAVLink | Flight-control communication |
+| Mission Planner | Ground station and mission monitoring |
+| Ubuntu Linux | Development environment |
+
+AI inference is currently evaluated on the CPU. CUDA acceleration is not assumed or required.
+
+## 7. Development Roadmap
+
+### Phase 1 — Simulation Foundation
+- Set up Gazebo Harmonic.
+- Integrate ArduPilot SITL.
+- Establish Mission Planner communication.
+- Verify simulated aircraft operation.
+
+### Phase 2 — Computer Vision
+- Access the simulated UAV camera.
+- Process live camera frames.
+- Evaluate lightweight YOLO models.
+- Improve detection reliability and performance.
+
+### Phase 3 — Tracking and Awareness
+- Develop object tracking.
+- Maintain observations across camera frames.
+- Establish a foundation for situational awareness.
+
+### Phase 4 — Geospatial Safety
+- Define restricted geographical areas.
+- Monitor planned routes against restricted areas.
+- Detect route conflicts.
+- Generate ground-station safety alerts.
+
+### Phase 5 — Intelligent Mission Planning
+- Develop safe alternative-route calculations.
+- Validate proposed detours.
+- Support safe mission continuation.
+- Explore rejoining the original mission.
+
+### Phase 6 — System Integration
+- Connect perception, decision-making, and navigation.
+- Integrate mission monitoring and reporting.
+- Validate behaviour in controlled simulation scenarios.
+- Demonstrate Search & Rescue and Infrastructure Inspection workflows.
+
+## 8. Engineering Principles
+
+AURORA follows these development principles:
+
+- **Simulation first:** validate functionality in simulation before considering physical deployment.
+- **Safety first:** preserve flight-controller safety protections.
+- **Modular design:** keep perception, planning, control, and monitoring components separate.
+- **CPU-friendly development:** favour lightweight models and practical processing requirements.
+- **Measured performance:** document actual test results rather than assuming real-time capability.
+- **Incremental validation:** test each component before integrating it into the complete system.
+
+## 9. Repository Structure
+
+```text
+AURORA/
+├── commands/
+│   └── AURORA_COMMANDS.md
+├── documentation/
+│   ├── AURORA_MASTER_ARCHITECTURE.md
+│   └── runbooks/
+│       └── SIMULATION_STARTUP.md
+├── vision/
+│   └── live_camera.py
+├── .gitignore
+└── README.md
 ```
 
-Check that the data partition is mounted and has space:
+Additional modules and documentation will be added as development progresses.
 
-``` bash
-findmnt /data
-df -h /data
-```
+## 10. Current Limitations
 
-The ArduPilot/Gazebo source trees currently remain in the home
-directory. Do not move them without updating paths and testing the
-launch setup.
+- The project is currently simulation-focused.
+- No physical UAV deployment is claimed.
+- Object detection requires further evaluation and validation.
+- Reliable target identification has not yet been established.
+- Object tracking is not yet implemented.
+- Geofence monitoring and intelligent replanning are planned capabilities.
+- Current simulation and image-processing performance is limited by available CPU resources.
+- Autonomous route changes must be validated in controlled simulation before being considered operational.
 
-## 4. Known installation paths
+## 11. Project Objective
 
-``` text
-ArduPilot source:
-~/uav_recovery/ardupilot
+AURORA aims to progress from a working simulated UAV environment toward an integrated intelligent aerial system combining:
 
-ArduPilot Python virtual environment:
-~/uav_recovery/ardupilot-venv
+**Computer Vision + Artificial Intelligence + Geospatial Safety + Autonomous Mission Planning**
 
-ArduPilot Gazebo plugin repository:
-~/uav_recovery/ardu_ws/src/ardupilot_gazebo
+The project will evolve through measurable development milestones, documented testing, and safety-focused simulation.
 
-Gazebo world:
-~/uav_recovery/ardu_ws/src/ardupilot_gazebo/worlds/iris_runway.sdf
+---
 
-Mission Planner executable:
-~/.wine/drive_c/Program Files (x86)/Mission Planner/MissionPlanner.exe
-```
-
-## 5. Start the simulation
-
-Use **three separate terminal windows**. Start Gazebo first, then
-ArduPilot SITL, then Mission Planner.
-
-### Terminal 1 --- Gazebo Harmonic
-
-``` bash
-cd ~/uav_recovery/ardu_ws/src/ardupilot_gazebo
-
-export GZ_SIM_SYSTEM_PLUGIN_PATH="$PWD/build:$GZ_SIM_SYSTEM_PLUGIN_PATH"
-export GZ_SIM_RESOURCE_PATH="$PWD/models:$PWD/worlds:$GZ_SIM_RESOURCE_PATH"
-
-gz sim -v4 -r worlds/iris_runway.sdf
-```
-
-Expected result: Gazebo opens the `iris_runway` world and displays the
-Iris aircraft on the runway.
-
-### Terminal 2 --- ArduPilot Copter SITL + MAVProxy
-
-``` bash
-cd ~/uav_recovery/ardupilot
-
-source ~/uav_recovery/ardupilot-venv/bin/activate
-
-./Tools/autotest/sim_vehicle.py \
-  -v ArduCopter \
-  -f gazebo-iris \
-  --model JSON \
-  --map \
-  --console \
-  --no-rebuild
-```
-
-Expected result: ArduCopter SITL starts and MAVProxy opens with a prompt
-such as:
-
-``` text
-STABILIZE>
-```
-
-MAVProxy has previously shown a GCS output to UDP `127.0.0.1:14550`,
-which is the port used by Mission Planner in this setup.
-
-If the virtual environment is no longer active in this terminal,
-activate it again with:
-
-``` bash
-source ~/uav_recovery/ardupilot-venv/bin/activate
-```
-
-### Terminal 3 --- Mission Planner (Mono)
-
-The Linux file-descriptor limit previously caused a
-`Too many open files` error. Raise the limit in the same terminal before
-launching Mission Planner:
-
-``` bash
-cd "$HOME/.wine/drive_c/Program Files (x86)/Mission Planner"
-
-ulimit -n 8192
-
-MONO_IOMAP=drive:case \
-LD_LIBRARY_PATH="$PWD:/lib/x86_64-linux-gnu" \
-mono MissionPlanner.exe
-```
-
-In Mission Planner:
-
-1.  Select **UDP** as the connection type.
-2.  Use port **14550** if prompted.
-3.  Connect and confirm that telemetry is being received.
-
-The `ulimit` setting applies to this terminal session. Repeat it
-whenever launching Mission Planner from a new terminal.
-
-## 6. Useful MAVProxy checks
-
-At the MAVProxy prompt (for example, `STABILIZE>`), these read-only
-commands can help inspect the connection:
-
-``` text
-status
-param show FRAME_CLASS
-param show FRAME_TYPE
-```
-
-The frame parameters were previously set to:
-
-``` text
-FRAME_CLASS = 1
-FRAME_TYPE  = 1
-```
-
-The vehicle previously reported `Frame: QUAD/X`. Verify the current
-values and current pre-arm messages; do not assume an earlier setting
-guarantees that all checks now pass.
-
-MAVProxy has previously forwarded telemetry to:
-
-``` text
-127.0.0.1:14550
-```
-
-## 7. Stopping the simulation
-
-1.  If the vehicle is armed, disarm it through the appropriate
-    simulator/ground-station control before shutting down.
-2.  In each terminal, press `Ctrl+C` to stop its process.
-3.  Stop SITL and Gazebo cleanly; do not force-kill processes unless
-    they are unresponsive.
-
-No takeoff/landing test is documented as completed yet.
-
-## 8. Troubleshooting notes
-
-### Mission Planner: `Too many open files`
-
-Launch it from a terminal after running:
-
-``` bash
-ulimit -n 8192
-```
-
-Then use the Mission Planner launch command in Section 5.
-
-### MAVProxy warning: missing `wx`
-
-A message such as `Failed to load module: No module named 'wx'` has
-appeared. The optional wx GUI module may be unavailable; MAVLink
-telemetry forwarding has worked without it.
-
-### Gazebo plugin/model paths
-
-The Gazebo launch command sets both plugin and resource paths. Run it
-from the `ardupilot_gazebo` repository directory so `$PWD` points to the
-correct location.
-
-### ArduPilot pre-arm warning
-
-A frame/pre-arm warning appeared during earlier startup. Verify current
-messages and simulator readiness before arming. Do not bypass pre-arm
-checks merely to make a test proceed.
-
-## 9. Planned architecture
-
-``` text
-Mission Planner / Ground Station
-              |
-            MAVLink
-              |
-        ArduPilot SITL  <---->  Gazebo Harmonic
-              |
-       Companion-computer interface
-          (ROS 2 - planned)
-              |
-     +--------+---------+
-     |                  |
-  Perception          Mission logic
-  Camera/LiDAR        State/recovery
-     |                  |
-     +------ Navigation+
-              |
-       Precision landing
-```
-
-Planned subsystems:
-
--   **Flight control:** ArduPilot, stabilization and mission execution.
--   **Perception:** camera, landing-target detection and LiDAR/range
-    sensing.
--   **Navigation:** position estimation and obstacle-aware navigation.
--   **Precision recovery:** landing target alignment and controlled
-    descent.
--   **Mission intelligence:** battery/state monitoring, recovery
-    decisions and logging.
-
-## 10. Development roadmap
-
--   [ ] Reconfirm stable Gazebo ↔ ArduPilot SITL connection.
--   [ ] Verify frame configuration and resolve any pre-arm warnings.
--   [ ] Demonstrate and record a safe simulated takeoff, waypoint
-    mission and landing.
--   [ ] Verify camera sensor output in Gazebo.
--   [ ] Select and integrate a suitable rangefinder/LiDAR simulation.
--   [ ] Design and add the ROS 2 companion-computer interface (Ubuntu
-    22.04-compatible distribution).
--   [ ] Implement and test obstacle detection/avoidance.
--   [ ] Implement landing-pad detection.
--   [ ] Implement and measure precision landing performance.
--   [ ] Add mission/recovery logic and structured logging.
--   [ ] Produce final demonstration video, architecture diagrams and
-    test report.
-
-## 11. Evidence and records
-
-For each milestone, save:
-
--   Date and software versions.
--   Exact launch/configuration commands.
--   Screenshots or short screen recordings.
--   Relevant SITL/Gazebo logs.
--   Test conditions and observed results.
--   Known limitations and next actions.
-
-Suggested locations:
-
-``` text
-/data/AURORA/logs/
-/data/AURORA/simulation/
-/data/AURORA/sensor_data/
-/data/AURORA/documentation/
-```
-
-------------------------------------------------------------------------
-
-**Documentation rule:** Update this README whenever a command, path,
-parameter, software version or verified capability changes. Clearly
-distinguish *planned*, *implemented* and *tested* features.
-
-
-
-Practise:
-
-In Nano, save with **Ctrl+O**, press **Enter**, then exit with **Ctrl+X**.
-
-### 3. Add a reference in the main README
-
-In `/data/AURORA/README.md`, add this under the documentation section:
-
-```markdown
-## Simulation startup commands
-
-See [Simulation Startup Guide](documentation/runbooks/SIMULATION_STARTUP.md)
-for the commands to launch Gazebo, ArduPilot SITL and Mission Planner.
+**AURORA — From aerial perception to intelligent autonomous action.**
